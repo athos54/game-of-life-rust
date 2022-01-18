@@ -1,5 +1,6 @@
 use std::{thread, time};
 use rand::{thread_rng, Rng};
+use std::env;
 
 #[derive(Debug,Clone)]
 #[warn(dead_code)]
@@ -196,10 +197,25 @@ fn sleep(milis:u64){
     thread::sleep(_time);
 }
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    
+    let size = &args[1];
+    
+    let size:usize = match size.parse::<usize>() {
+        Ok(num) => {
+            if num >= 3 {
+                num
+            } else {
+                5
+            }
+        },
+        Err(_) => 10,
+    };
+
     clear_terminal();
     println!("Hello, world!");
     let mut gen = 0;
-    let mut table = Table::new(50);
+    let mut table = Table::new(size);
     
     loop {
         clear_terminal();
