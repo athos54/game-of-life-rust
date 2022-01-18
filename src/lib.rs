@@ -25,8 +25,6 @@ pub mod game {
             for x in 0..self.rows.len() {
                 for y in 0..self.rows[x].cells.len() {
                     let life_around = self.rows[x].cells[y].check(x, y, self);
-                    // this not work because is changing stage between checks, I should create a new table
-                    // self.rows[x].cells[y].state = 0;
                     if self.rows[x].cells[y].state == 0 {
                         if life_around == 3 {
                             is_some_cell_alive = true;
@@ -83,11 +81,6 @@ pub mod game {
             row
         }
     }
-    // #[derive(Debug)]
-    // enum STATE{
-    //     ALIVE=1,
-    //     DEAD=0
-    // }
     #[derive(Debug, Clone)]
     pub struct Cell {
         pub state: i32,
@@ -177,7 +170,6 @@ pub mod game {
             }
 
             total_live
-            // STATE::DEAD
         }
     }
 }

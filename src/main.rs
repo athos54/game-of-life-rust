@@ -16,7 +16,6 @@ fn main() {
     let speed = get_speed();
 
     clear_terminal();
-    println!("Hello, world!");
     let mut gen = 0;
     let mut table = Table::new(size);
 
@@ -26,7 +25,6 @@ fn main() {
         table.print();
         sleep(speed);
         let is_last_day = table.next_day();
-        println!("is_last_day {}", is_last_day);
         if is_last_day {
             table.print();
             break;
