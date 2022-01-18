@@ -13,3 +13,7 @@
 for example
 
 `./target/release/game_of_life2 10 1000`
+
+## TODOS
+
+> Improve the way of each cell calc the live around
