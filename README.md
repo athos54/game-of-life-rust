@@ -1,5 +1,7 @@
 # This is an implementation of Conway game of life on rust
 
+The only purpose of this repo is learn rust basics. So, if you are a pro on rust and want help me to improve, feel free to make a pull request with your improves, if posible, explaining the reasons
+
 [Conway game of life rules](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
 ## How to run
