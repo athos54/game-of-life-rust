@@ -1,4 +1,5 @@
 pub mod game {
+    mod helpers;
     use rand::{thread_rng, Rng};
 
     #[derive(Debug, Clone)]
@@ -81,6 +82,7 @@ pub mod game {
             row
         }
     }
+
     #[derive(Debug, Clone)]
     pub struct Cell {
         pub state: i32,
@@ -88,86 +90,18 @@ pub mod game {
 
     impl Cell {
         fn check(&self, x: usize, y: usize, table: &Table) -> i32 {
-            let size = table.rows.len() - 1;
             let mut total_live = 0;
 
-            if x > 0 && x < size && y > 0 && y < size {
-                // internal cells
-                total_live = total_live + table.rows[x - 1].cells[y - 1].state;
-                total_live = total_live + table.rows[x - 1].cells[y].state;
-                total_live = total_live + table.rows[x - 1].cells[y + 1].state;
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '-', y, '-', table);
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '-', y, '=', table);
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '-', y, '+', table);
 
-                total_live = total_live + table.rows[x + 1].cells[y - 1].state;
-                total_live = total_live + table.rows[x + 1].cells[y].state;
-                total_live = total_live + table.rows[x + 1].cells[y + 1].state;
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '+', y, '-', table);
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '+', y, '=', table);
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '+', y, '+', table);
 
-                total_live = total_live + table.rows[x].cells[y - 1].state;
-                total_live = total_live + table.rows[x].cells[y + 1].state;
-            } else {
-                //external cells
-                if x == 0 {
-                    if y == 0 {
-                        total_live = total_live + table.rows[x + 1].cells[y].state;
-                        total_live = total_live + table.rows[x + 1].cells[y + 1].state;
-                        total_live = total_live + table.rows[x].cells[y + 1].state;
-                    }
-                    if y > 0 && y < size {
-                        total_live = total_live + table.rows[x + 1].cells[y - 1].state;
-                        total_live = total_live + table.rows[x + 1].cells[y].state;
-                        total_live = total_live + table.rows[x + 1].cells[y + 1].state;
-
-                        total_live = total_live + table.rows[x].cells[y - 1].state;
-                        total_live = total_live + table.rows[x].cells[y + 1].state;
-                    }
-                    if y == size {
-                        total_live = total_live + table.rows[x + 1].cells[y - 1].state;
-                        total_live = total_live + table.rows[x + 1].cells[y].state;
-                        total_live = total_live + table.rows[x].cells[y - 1].state;
-                    }
-                }
-
-                if x == size {
-                    if y == 0 {
-                        total_live = total_live + table.rows[x - 1].cells[y].state;
-                        total_live = total_live + table.rows[x - 1].cells[y + 1].state;
-                        total_live = total_live + table.rows[x].cells[y + 1].state;
-                    }
-                    if y > 0 && y < size {
-                        total_live = total_live + table.rows[x - 1].cells[y - 1].state;
-                        total_live = total_live + table.rows[x - 1].cells[y].state;
-                        total_live = total_live + table.rows[x - 1].cells[y + 1].state;
-
-                        total_live = total_live + table.rows[x].cells[y - 1].state;
-                        total_live = total_live + table.rows[x].cells[y + 1].state;
-                    }
-                    if y == size {
-                        total_live = total_live + table.rows[x - 1].cells[y - 1].state;
-                        total_live = total_live + table.rows[x - 1].cells[y].state;
-                        total_live = total_live + table.rows[x].cells[y - 1].state;
-                    }
-                }
-
-                if x > 0 && x < size {
-                    if y == 0 {
-                        total_live = total_live + table.rows[x - 1].cells[y].state;
-                        total_live = total_live + table.rows[x - 1].cells[y + 1].state;
-
-                        total_live = total_live + table.rows[x + 1].cells[y].state;
-                        total_live = total_live + table.rows[x + 1].cells[y + 1].state;
-
-                        total_live = total_live + table.rows[x].cells[y + 1].state;
-                    }
-                    if y == size {
-                        total_live = total_live + table.rows[x - 1].cells[y - 1].state;
-                        total_live = total_live + table.rows[x - 1].cells[y].state;
-
-                        total_live = total_live + table.rows[x + 1].cells[y - 1].state;
-                        total_live = total_live + table.rows[x + 1].cells[y].state;
-
-                        total_live = total_live + table.rows[x].cells[y - 1].state;
-                    }
-                }
-            }
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '=', y, '-', table);
+            total_live = total_live + crate::game::helpers::get_cell_status(x, '=', y, '+', table);
 
             total_live
         }

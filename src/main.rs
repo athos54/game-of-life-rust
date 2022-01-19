@@ -31,6 +31,11 @@ fn main() {
         }
         gen = gen + 1;
     }
+
+    // println!("Generation: {}", gen);
+    // table.print();
+    // let is_last_day = table.next_day();
+    // println!("islastday {}", is_last_day);
 }
 
 fn get_speed() -> u64 {
